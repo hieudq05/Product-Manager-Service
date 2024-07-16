@@ -1,0 +1,703 @@
+    /*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package com.pms.ui;
+
+import com.pms.dao.UsersDAO;
+import com.pms.entity.Users;
+import com.pms.utils.CustomListCellRender;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
+/**
+ *
+ * @author phongnguyen
+ */
+public class Nhanvien extends javax.swing.JFrame {
+
+    File file;
+    Boolean truongPhong;
+    String maNV, tenNV, urlAnh;
+    /**
+     * Creates new form NewJFrame
+     */
+    public Nhanvien() {
+        initComponents();
+        setLocationRelativeTo(null);
+        this.setExtendedState(JFrame.MAXIMIZED_HORIZ);
+        this.getContentPane().setBackground(Color.WHITE);
+        setLayoutTable();
+        setDateNow();
+        uploadDataToTable();
+        setLayoutChucVu();
+    }
+    
+    //Định dạng cho bảng
+    public void setLayoutTable(){
+        //Thêm màu
+        tblDanhSach.setGridColor(new Color(227,227,227));
+        //Định dạng dòng tiêu đề (font chữ, chiều cao)
+        JTableHeader titleHeader = tblDanhSach.getTableHeader();
+        titleHeader.setFont(new Font("Montserrat", Font.BOLD, 14));
+        titleHeader.setPreferredSize(new Dimension(titleHeader.getWidth(), 40));
+    }
+    
+    //Hiển thị ngày tháng hiện tại cho mục "Ngày thêm" bằng cách dùng SimpleDateFormat
+    public void setDateNow(){
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        lblNgayThem.setText(format.format(new Date()));
+    }
+    
+    //Tăng chiều cao cho list Chức vụ bằng lớp com.pms.utils.CustomListCellRender
+    public void setLayoutChucVu(){
+        cboVaiTro.setRenderer(new CustomListCellRender());
+    }
+    
+    //Phương thức nhận Chức vụ, Mã NV, Tên NV, Đường dẫn ảnh từ các frame khác
+    public void get_Data_From_DifFrame(Boolean tp, String manv, String tennv, String urlanh){
+        truongPhong = tp;
+        maNV = manv;
+        tenNV = tennv;
+        urlAnh = urlanh;
+        lblNguoiThem.setText(manv);
+    }
+    
+    //Kiểm tra các ô dữ liệu có trống không
+    public Boolean checkNaN(){
+        return txtMaNhanVien.getText().isEmpty() || txtMatKhau.getText().isEmpty() || txtTenNhanVien.getText().isEmpty() || lblImage.getIcon() == null;
+    }
+    
+    //Đẩy dữ liệu nhân viên (Users) từ Database lên Bảng
+    public void uploadDataToTable(){
+        //Tạo đối tượng SimpleDateFormat để định dạng và chuyển dữ liệu dạng ngày tháng năm
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        //Lấy Model của table cần upload dữ liệu lên
+        DefaultTableModel tblModel = (DefaultTableModel) tblDanhSach.getModel();
+        //Làm mới dữ liệu của bảng bằng cách đưa số dòng của bảng bằng 0
+        tblModel.setRowCount(0);
+        //Tạo đối tượng List để chứa dữ liệu danh sách nhân viên lấy từ database
+        List<Users> danhSachNhanVien = new ArrayList<>();
+        //Truy vấn toàn bộ bảng của database và gán cho list
+        danhSachNhanVien = new UsersDAO().selectAll();
+        //Dùng vòng lặp for each để thêm tất cả nhân viên có trong list vào bảng
+        for (Users users : danhSachNhanVien) {
+            tblModel.addRow(new String[] { users.getMaNV(), users.getTenNV(), users.getMatkhau(), sdf.format(users.getNgayThem()), users.getNguoiThem(), users.getVaiTro()==true?"Trưởng phòng":"Nhân viên", users.getDuongDanAnh()});
+            tblModel.fireTableDataChanged();
+        }
+    }
+    
+    //Làm mới Form quản lý nhân viên, đưa Form về trạng thái ban đầu
+    public void refreshForm(){
+        lblImage.setIcon(null);
+        lblImage.setText("Click here to add photo");
+        txtMaNhanVien.setText("");
+        txtMatKhau.setText("");
+        txtTenNhanVien.setText("");
+        lblNguoiThem.setText(maNV);
+        setDateNow();
+        lblMaNVDangThaoTac.setText("<Mã nhân viên>");
+        cboVaiTro.setSelectedIndex(0);
+    }
+    
+    public Boolean checkUsersExists(JTable table){
+        for( int i = 0 ; i < table.getRowCount() ; i++ ){
+            if(table.getValueAt(i, 0).toString().equals(txtMaNhanVien.getText()))return true;
+        }
+        return false;
+    }
+        
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        tabQuanLy = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtTenNhanVien = new javax.swing.JTextField();
+        cboVaiTro = new javax.swing.JComboBox<>();
+        btnSua = new javax.swing.JButton();
+        btnLamMoi = new javax.swing.JButton();
+        btnXoa = new javax.swing.JButton();
+        btnThem = new javax.swing.JButton();
+        txtMaNhanVien = new javax.swing.JTextField();
+        lblNgayThem = new javax.swing.JLabel();
+        lblImage = new javax.swing.JLabel();
+        lblNguoiThem = new javax.swing.JLabel();
+        txtMatKhau = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel4 = new javax.swing.JLabel();
+        lblMaNVDangThaoTac = new javax.swing.JLabel();
+        tabDanhSach = new javax.swing.JTabbedPane();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblDanhSach = new javax.swing.JTable();
+        btnTrangChu = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Quản lý nhân viên");
+
+        tabQuanLy.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setToolTipText("");
+
+        jLabel2.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
+        jLabel2.setText("Mã nhân viên:");
+
+        jLabel3.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
+        jLabel3.setText("Họ và tên:");
+
+        jLabel5.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
+        jLabel5.setText("Ngày thêm:");
+
+        jLabel6.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
+        jLabel6.setText("Mật khẩu:");
+
+        jLabel7.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
+        jLabel7.setText("Người thêm:");
+
+        jLabel8.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
+        jLabel8.setText("Vai trò:");
+
+        txtTenNhanVien.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
+        txtTenNhanVien.setMargin(new java.awt.Insets(2, 16, 2, 16));
+
+        cboVaiTro.setFont(new java.awt.Font("Montserrat", 0, 13)); // NOI18N
+        cboVaiTro.setForeground(new java.awt.Color(51, 51, 51));
+        cboVaiTro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhân viên", "Trưởng phòng" }));
+
+        btnSua.setBackground(new java.awt.Color(202, 233, 255));
+        btnSua.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
+        btnSua.setForeground(new java.awt.Color(51, 51, 51));
+        btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pms/icon/edit_2_line.png"))); // NOI18N
+        btnSua.setText("Sửa");
+        btnSua.setBorder(null);
+        btnSua.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSua.setIconTextGap(10);
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
+
+        btnLamMoi.setBackground(new java.awt.Color(202, 233, 255));
+        btnLamMoi.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
+        btnLamMoi.setForeground(new java.awt.Color(51, 51, 51));
+        btnLamMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pms/icon/refresh_4_line.png"))); // NOI18N
+        btnLamMoi.setText("Làm mới");
+        btnLamMoi.setBorder(null);
+        btnLamMoi.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLamMoi.setIconTextGap(10);
+        btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLamMoiActionPerformed(evt);
+            }
+        });
+
+        btnXoa.setBackground(new java.awt.Color(202, 233, 255));
+        btnXoa.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
+        btnXoa.setForeground(new java.awt.Color(51, 51, 51));
+        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pms/icon/folder_delete_line.png"))); // NOI18N
+        btnXoa.setText("Xóa");
+        btnXoa.setBorder(null);
+        btnXoa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnXoa.setIconTextGap(10);
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
+
+        btnThem.setBackground(new java.awt.Color(0, 153, 255));
+        btnThem.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
+        btnThem.setForeground(new java.awt.Color(255, 255, 255));
+        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pms/icon/file_new_line.png"))); // NOI18N
+        btnThem.setText("Thêm");
+        btnThem.setToolTipText("");
+        btnThem.setBorder(null);
+        btnThem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnThem.setIconTextGap(10);
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
+
+        txtMaNhanVien.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
+        txtMaNhanVien.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        txtMaNhanVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMaNhanVienActionPerformed(evt);
+            }
+        });
+
+        lblNgayThem.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
+        lblNgayThem.setText("<Null>");
+
+        lblImage.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
+        lblImage.setForeground(new java.awt.Color(102, 102, 102));
+        lblImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblImage.setText("Click here to add photo");
+        lblImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 255), 3));
+        lblImage.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblImage.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblImage.setIconTextGap(10);
+        lblImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblImageMouseClicked(evt);
+            }
+        });
+
+        lblNguoiThem.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
+        lblNguoiThem.setText("<Null>");
+
+        txtMatKhau.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
+        txtMatKhau.setMargin(new java.awt.Insets(2, 16, 2, 16));
+
+        jLabel1.setText("(Mã nhân viên người thêm)");
+
+        jSeparator1.setBackground(new java.awt.Color(204, 204, 204));
+        jSeparator1.setForeground(new java.awt.Color(204, 204, 204));
+        jSeparator1.setOpaque(true);
+
+        jLabel4.setText("Nhân viên đang thao tác:");
+
+        lblMaNVDangThaoTac.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblMaNVDangThaoTac.setText("<Mã nhân viên>");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(70, 70, 70)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel7))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblNgayThem)
+                                    .addComponent(lblNguoiThem)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(cboVaiTro, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtMaNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel6)
+                            .addComponent(txtTenNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(60, 60, 60)
+                        .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(43, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblMaNVDangThaoTac)
+                .addGap(37, 37, 37)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(156, 156, 156))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnLamMoi, btnSua, btnXoa});
+
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(224, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtMaNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTenNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cboVaiTro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(lblNgayThem))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(lblNguoiThem))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addGap(14, 14, 14)
+                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(lblMaNVDangThaoTac)))
+                .addGap(67, 67, 67))
+        );
+
+        tabQuanLy.addTab("  Quản lý     ", new javax.swing.ImageIcon(getClass().getResource("/com/pms/icon/edit_4_line.png")), jPanel1); // NOI18N
+
+        tabDanhSach.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+
+        tblDanhSach.setAutoCreateRowSorter(true);
+        tblDanhSach.setFont(new java.awt.Font("Montserrat", 0, 13)); // NOI18N
+        tblDanhSach.setForeground(new java.awt.Color(72, 72, 72));
+        tblDanhSach.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"1", "Dương Quốc Hiếu", "1", "30/06/2024", "Dương Quốc Hiếu", "Trưởng phòng", "Trưởng-phòng-1.png"}
+            },
+            new String [] {
+                "Mã nhân viên", "Họ và tên", "Mật khẩu", "Ngày thêm", "Người thêm", "Chức vụ", "Ảnh"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblDanhSach.setRowHeight(35);
+        tblDanhSach.setShowGrid(true);
+        tblDanhSach.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDanhSachMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblDanhSach);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 910, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 928, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        tabDanhSach.addTab("    Danh sách nhân viên       ", new javax.swing.ImageIcon(getClass().getResource("/com/pms/icon/task_2_line.png")), jPanel2); // NOI18N
+
+        btnTrangChu.setBackground(new java.awt.Color(202, 233, 255));
+        btnTrangChu.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
+        btnTrangChu.setForeground(new java.awt.Color(51, 51, 51));
+        btnTrangChu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pms/icon/home_3_line.png"))); // NOI18N
+        btnTrangChu.setText("Trang chủ");
+        btnTrangChu.setBorder(null);
+        btnTrangChu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTrangChu.setIconTextGap(10);
+        btnTrangChu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTrangChuActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tabDanhSach)
+                    .addComponent(btnTrangChu, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(51, 51, 51)
+                .addComponent(tabQuanLy, javax.swing.GroupLayout.PREFERRED_SIZE, 899, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(btnTrangChu, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tabQuanLy)
+                    .addComponent(tabDanhSach, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(28, 28, 28))
+        );
+
+        tabQuanLy.getAccessibleContext().setAccessibleName("Quản lý");
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    //Sự kiện click chuột vào vùng JLabel ảnh
+    private void lblImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImageMouseClicked
+        //Dùng JFileChooser để chọn ảnh khi nhấp chuột vào vùng Label
+        JFileChooser jfc = new JFileChooser();
+        int choose = jfc.showOpenDialog(this);
+        if(choose==JFileChooser.APPROVE_OPTION){
+            file = jfc.getSelectedFile();
+        }
+        //Xóa chữ ở lblImage và hiển thị ảnh theo kích thước của JLabel đã thiết kế trước đó
+        lblImage.setText("");
+        int newHeight = (lblImage.getWidth() * new ImageIcon(file.getAbsolutePath()).getImage().getHeight(null)) / new ImageIcon(file.getAbsolutePath()).getImage().getWidth(null);
+        Image img = new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(lblImage.getWidth(), newHeight, Image.SCALE_SMOOTH);
+        lblImage.setIcon(new ImageIcon(img));
+    }//GEN-LAST:event_lblImageMouseClicked
+
+    private void btnTrangChuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrangChuActionPerformed
+        //Ẩn Frame hiện tại
+        dispose();
+        //Truyền dữ liệu Chức vụ, Mã NV, Tên NV, Đường dẫn ảnh qua Frame TrangChu
+        //Hiển thị Frame TrangChu
+        TrangChu trangChuJFrame = new TrangChu();
+        trangChuJFrame.get_Data_From_DifFrame(truongPhong, maNV, tenNV, urlAnh);
+        trangChuJFrame.setVisible(true);
+    }//GEN-LAST:event_btnTrangChuActionPerformed
+
+    //Sự kiện nút thêm
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        //Kiểm tra người dùng có đang trỏ vào nhân viên nào không
+        if(lblMaNVDangThaoTac.getText().equals("<Mã nhân viên>") == false){
+            JOptionPane.showMessageDialog(this, "Làm mới Form trước khi thêm nhân viên!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            //Kiểm tra dữ liệu có trống trong Form không trước khi xử lý dữ liệu
+            if(checkNaN() == true){
+                JOptionPane.showMessageDialog(this, "Hãy nhập đủ dữ liệu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } else {
+                //Kiểm tra mã nhân viên nhập vào đã tồn tại chưa
+                if(checkUsersExists(tblDanhSach)){
+                    JOptionPane.showMessageDialog(this, "Đã tồn tại nhân viên mã "+ txtMaNhanVien.getText()+"\nVui lòng thử lại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    //Tạo một đối tượng Users để nhận dữ liệu từ Form
+                    Users user = new Users();
+                    user.setMaNV(txtMaNhanVien.getText());
+                    user.setMatkhau(txtMatKhau.getText());
+                    user.setTenNV(txtTenNhanVien.getText());
+                    user.setNguoiThem(maNV);
+                    user.setVaiTro(cboVaiTro.getSelectedIndex()==1);
+                    user.setDuongDanAnh(file.getAbsolutePath());
+                    //Thêm đối tượng vào Database bằng phương thức insert của Lớp com.pms.dao.UsersDAO
+                    new UsersDAO().insert(user);
+                    //Upload dữ liệu lên Bảng
+                    uploadDataToTable();
+                    file = null;
+                    //Sau khi thêm làm mới Form
+                    refreshForm();
+                    //Thông báo thêm thành công
+                    JOptionPane.showMessageDialog(this, "Đã thêm!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                }  
+            }
+        }
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    //Sự kiện nhấp chuột vào bảng
+    private void tblDanhSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDanhSachMouseClicked
+        //Tạo biến lưu vị trí dòng đã nhấp chuột
+        int selectedIndex = tblDanhSach.getSelectedRow();
+        //Lấy dữ liệu từ dòng đã chọn sau đó đẩy lên Form
+        txtMaNhanVien.setText(tblDanhSach.getValueAt(selectedIndex, 0).toString());
+        txtTenNhanVien.setText(tblDanhSach.getValueAt(selectedIndex, 1).toString());
+        txtMatKhau.setText(tblDanhSach.getValueAt(selectedIndex, 2).toString());
+        lblNgayThem.setText(tblDanhSach.getValueAt(selectedIndex, 3).toString());
+        lblNguoiThem.setText(tblDanhSach.getValueAt(selectedIndex, 4).toString());
+        cboVaiTro.setSelectedIndex(tblDanhSach.getValueAt(selectedIndex, 5).toString().equals("Trưởng phòng")?1:0);
+        lblImage.setText("");
+        int newHeight = (lblImage.getWidth() * new ImageIcon(tblDanhSach.getValueAt(selectedIndex, 6).toString()).getImage().getHeight(null)) / new ImageIcon(tblDanhSach.getValueAt(selectedIndex, 6).toString()).getImage().getWidth(null);
+        Image img = new ImageIcon(tblDanhSach.getValueAt(selectedIndex, 6).toString()).getImage().getScaledInstance(lblImage.getWidth(), newHeight, Image.SCALE_SMOOTH);
+        lblImage.setIcon(new ImageIcon(img));
+        lblMaNVDangThaoTac.setText(tblDanhSach.getValueAt(selectedIndex, 0).toString());
+        file = new File(tblDanhSach.getValueAt(selectedIndex, 6).toString());
+    }//GEN-LAST:event_tblDanhSachMouseClicked
+
+    //Sự kiện nút làm mới
+    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
+        refreshForm();
+    }//GEN-LAST:event_btnLamMoiActionPerformed
+
+    //Sự kiện nút xóa
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        //Kiểm tra người dùng có đang trỏ vào nhân viên nào hay không
+        if(lblMaNVDangThaoTac.getText().equals("<Mã nhân viên>")){
+            JOptionPane.showMessageDialog(this, "Chọn nhân viên muốn thao tác!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            int choose;
+            if(maNV.equals(txtMaNhanVien.getText())){
+                JOptionPane.showMessageDialog(this, "Không thể xóa người dùng đang đăng nhập!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                int deleteOption = JOptionPane.showConfirmDialog(this, "Xác nhận xóa?", "Thông báo", JOptionPane.OK_CANCEL_OPTION);
+                if(deleteOption == JOptionPane.OK_OPTION){
+                    new UsersDAO().delete(lblMaNVDangThaoTac.getText());
+                    uploadDataToTable();
+                    refreshForm();
+                }
+            }
+            
+            
+        }
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    //Sự kiện nút sửa
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        //Kiểm tra người dùng có đang trỏ vào nhân viên nào hay không
+        if(lblMaNVDangThaoTac.getText().equals("<Mã nhân viên>")){
+            JOptionPane.showMessageDialog(this, "Chọn nhân viên muốn thao tác!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            if(checkNaN()==true){
+                JOptionPane.showMessageDialog(this, "Nhập đủ dữ liệu trước khi cập nhật!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                int deleteOption = JOptionPane.showConfirmDialog(this, "Xác nhận cập nhật?", "Thông báo", JOptionPane.OK_CANCEL_OPTION);
+                if(deleteOption == JOptionPane.OK_OPTION){
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    Users user = new Users();
+                    user.setMaNV(txtMaNhanVien.getText());
+                    user.setMatkhau(txtMatKhau.getText());
+                    user.setTenNV(txtTenNhanVien.getText());
+                    user.setNguoiThem(maNV);
+                    try {
+                        user.setNgayThem(sdf.parse(lblNgayThem.getText()));
+                    } catch (ParseException ex) {
+                        Logger.getLogger(Nhanvien.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    user.setVaiTro(cboVaiTro.getSelectedIndex()==1);
+                    user.setDuongDanAnh(file.getAbsolutePath());
+                    new UsersDAO().update(user);
+                    uploadDataToTable();
+                    refreshForm();
+                }
+            }
+            
+        }
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void txtMaNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaNhanVienActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMaNhanVienActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Nhanvien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Nhanvien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Nhanvien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Nhanvien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Nhanvien().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLamMoi;
+    private javax.swing.JButton btnSua;
+    private javax.swing.JButton btnThem;
+    private javax.swing.JButton btnTrangChu;
+    private javax.swing.JButton btnXoa;
+    private javax.swing.JComboBox<String> cboVaiTro;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblImage;
+    private javax.swing.JLabel lblMaNVDangThaoTac;
+    private javax.swing.JLabel lblNgayThem;
+    private javax.swing.JLabel lblNguoiThem;
+    private javax.swing.JTabbedPane tabDanhSach;
+    private javax.swing.JTabbedPane tabQuanLy;
+    private javax.swing.JTable tblDanhSach;
+    private javax.swing.JTextField txtMaNhanVien;
+    private javax.swing.JTextField txtMatKhau;
+    private javax.swing.JTextField txtTenNhanVien;
+    // End of variables declaration//GEN-END:variables
+}
