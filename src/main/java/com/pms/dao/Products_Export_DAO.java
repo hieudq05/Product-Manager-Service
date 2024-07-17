@@ -15,7 +15,7 @@ public class Products_Export_DAO extends pmsDAO<Products_Export, Integer>{
 	
 	String delete = "DELETE Products_export WHERE ID = ?";
 	
-	String selectAll = "SELECT * FROM Products_export";
+	String selectAll = "SELECT * FROM Products_export WHERE nguoixuat = ?";
 	
 	String selectByID = "SELECT * FROM Products_export WHERE ID = ?";
 	
@@ -77,5 +77,25 @@ public class Products_Export_DAO extends pmsDAO<Products_Export, Integer>{
 			e.printStackTrace();
 		}
 		return pExport;
+	}
+        
+        public List<Products_Export> selectAll(String nguoinhap) {
+		List<Products_Export> list = new ArrayList<>();
+		ResultSet rs = Connector.query(selectAll, nguoinhap);
+		try {
+			while (rs.next()) {
+				Products_Export pImport = new Products_Export();
+				pImport.setID(rs.getInt(1));
+				pImport.setMaHang(rs.getString(2));
+				pImport.setNgayXuat(rs.getDate(3));
+				pImport.setNguoiXuat(rs.getString(4));
+				pImport.setSoLuong(rs.getInt(5));
+                                pImport.setGhiChu(rs.getNString(6));
+				list.add(pImport);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

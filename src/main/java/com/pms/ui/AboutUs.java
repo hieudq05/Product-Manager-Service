@@ -38,6 +38,7 @@ public class AboutUs extends javax.swing.JDialog {
         jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pms/icon/poly_1.png"))); // NOI18N
 
@@ -50,6 +51,7 @@ public class AboutUs extends javax.swing.JDialog {
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
+        jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
         jTextArea1.setText("Product Version: ProBoox 2024.30.6\nJava: 21.0.2; Java HotSpot(TM) 64-Bit Server VM 21.0.2+13-LTS-58\nRuntime: Java(TM) SE Runtime Environment 21.0.2+13-LTS-58");
         jScrollPane1.setViewportView(jTextArea1);

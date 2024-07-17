@@ -82,6 +82,7 @@ public class XuatHang extends javax.swing.JFrame {
         maNV = manv;
         tenNV = tennv;
         urlAnh = urlanh;
+        fillLichSuTable();
     }
     
     void chonanh() {
@@ -173,7 +174,7 @@ public class XuatHang extends javax.swing.JFrame {
     DefaultTableModel modell = (DefaultTableModel) tblLichSu.getModel();
     modell.setRowCount(0);
     try {
-        List<Products_Export> list = exportdao.selectAll();
+        List<Products_Export> list = exportdao.selectAll(maNV);
         for (Products_Export pe : list) {
             Object[] roww = {
                 pe.getID(),
@@ -597,8 +598,12 @@ public class XuatHang extends javax.swing.JFrame {
                     if(txtSoLuongNhap.getText().matches("^\\d+$")==false){
                         JOptionPane.showMessageDialog(this, "Số lượng phải là số dương");
                     } else {
-                        xuathang();
-                        clearform();
+                        if(Integer.valueOf(txtSoLuongNhap.getText())> Integer.valueOf(tblHangHoa.getValueAt(rowSellected, 2).toString())){
+                            JOptionPane.showMessageDialog(this, "Không đủ hàng trong kho!");
+                        } else {
+                            xuathang();
+                            clearform();
+                        }
                     }
                 }
             }
