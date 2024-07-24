@@ -7,6 +7,7 @@ package com.pms.ui;
 import com.pms.dao.UsersDAO;
 import com.pms.entity.Users;
 import com.pms.utils.CustomListCellRender;
+import com.pms.utils.XImage;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -48,6 +49,7 @@ public class Nhanvien extends javax.swing.JFrame {
         setDateNow();
         uploadDataToTable();
         setLayoutChucVu();
+        this.setIconImage(XImage.getAppIcon());
     }
     
     //Định dạng cho bảng

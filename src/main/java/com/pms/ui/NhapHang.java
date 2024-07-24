@@ -48,8 +48,6 @@ public class NhapHang extends javax.swing.JFrame {
      * Creates new form Products_Manager
      */
     
-    
-    
     void init() {
         setLocationRelativeTo(null);
         filltable();
@@ -61,6 +59,7 @@ public class NhapHang extends javax.swing.JFrame {
         init();
         setLocationRelativeTo(null);
         this.getContentPane().setBackground(new Color(255,255,255));
+        this.setIconImage(XImage.getAppIcon());
     }
     
     public void setLayoutTable(){

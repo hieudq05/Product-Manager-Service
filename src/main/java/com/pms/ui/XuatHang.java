@@ -48,9 +48,7 @@ public class XuatHang extends javax.swing.JFrame {
     /**
      * Creates new form Products_Manager
      */
-    
-    
-    
+
     void init() {
         setLocationRelativeTo(null);
         filltable();
@@ -62,6 +60,7 @@ public class XuatHang extends javax.swing.JFrame {
         setLayoutTable();
         init();
         setLocationRelativeTo(null);
+        this.setIconImage(XImage.getAppIcon());
     }
     
     public void setLayoutTable(){

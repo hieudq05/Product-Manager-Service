@@ -4,6 +4,7 @@
  */
 package com.pms.ui;
 
+import com.pms.utils.XImage;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import javax.swing.Timer;
@@ -23,6 +24,7 @@ public class KhoiDong extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         progress();
         this.getContentPane().setBackground(Color.WHITE);
+        this.setIconImage(XImage.getAppIcon());
     }
     
     public void progress(){

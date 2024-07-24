@@ -7,6 +7,7 @@ package com.pms.ui;
 import com.pms.dao.History_Import_Export_DAO;
 import com.pms.entity.History_IP_EP;
 import com.pms.utils.CustomListCellRender;
+import com.pms.utils.XImage;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -39,6 +40,7 @@ public class LichSuXuatNhap extends javax.swing.JFrame {
         fillList();
         setLocationRelativeTo(null);
         this.getContentPane().setBackground(new Color(255,255,255));
+        this.setIconImage(XImage.getAppIcon());
     }
 
     public void setLayoutTable() {
@@ -67,8 +69,8 @@ public class LichSuXuatNhap extends javax.swing.JFrame {
                     ls.getThaoTac(),
                     ls.getMaHang(),
                     ls.getTenHang(),
-                    ls.getDonGia(),
                     ls.getSoLuong(),
+                    ls.getDonGia(),
                     ls.getNguoiThaoTac(),
                     ls.getSoLuongBanDau(),
                     ls.getSoLuongConLai()
@@ -328,6 +330,7 @@ public class LichSuXuatNhap extends javax.swing.JFrame {
                 history_IP_EP.getMaHang(),
                 history_IP_EP.getTenHang(),
                 history_IP_EP.getSoLuong(),
+                history_IP_EP.getDonGia(),
                 history_IP_EP.getNguoiThaoTac(),
                 history_IP_EP.getSoLuongBanDau(),
                 history_IP_EP.getSoLuongConLai()
@@ -354,6 +357,7 @@ public class LichSuXuatNhap extends javax.swing.JFrame {
                 history_IP_EP.getMaHang(),
                 history_IP_EP.getTenHang(),
                 history_IP_EP.getSoLuong(),
+                history_IP_EP.getDonGia(),
                 history_IP_EP.getNguoiThaoTac(),
                 history_IP_EP.getSoLuongBanDau(),
                 history_IP_EP.getSoLuongConLai()
@@ -380,6 +384,7 @@ public class LichSuXuatNhap extends javax.swing.JFrame {
                 history_IP_EP.getMaHang(),
                 history_IP_EP.getTenHang(),
                 history_IP_EP.getSoLuong(),
+                history_IP_EP.getDonGia(),
                 history_IP_EP.getNguoiThaoTac(),
                 history_IP_EP.getSoLuongBanDau(),
                 history_IP_EP.getSoLuongConLai()

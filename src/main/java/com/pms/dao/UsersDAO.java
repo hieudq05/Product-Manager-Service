@@ -18,6 +18,8 @@ public class UsersDAO extends pmsDAO<Users, String>{
                           WHERE manv = ?""";
     final String selectAll = "SELECT * FROM Users";
     final String selectByID = "SELECT * FROM Users WHERE manv = ?";
+    final String selectTongNhanVien = "select count(manv) from users";
+    final String selectAllThongke = "SELECT manv,matkhau,tennv FROM Users";
 
     @Override
     public void insert(Users entity) {
@@ -73,5 +75,41 @@ public class UsersDAO extends pmsDAO<Users, String>{
             Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return us;
+    }
+    
+    public Integer selectTongNhanVien() {
+         try {
+             ResultSet rs = Connector.query(selectTongNhanVien);  
+             rs.next();
+         return rs.getInt(1);
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+         return -1;
+     }
+    
+    public List<Users> selectAllThongKe() {
+         return selectByThongKe(selectAllThongke);   
+    }
+    
+    public List<Users> selectByMaNhanVien(String maNV) {
+         return  selectByThongKe(selectByID,maNV);      
+    }
+    
+    public List<Users> selectByThongKe(String sql, Object... args) {
+            List<Users> list = new ArrayList<>();
+                try {
+                    ResultSet rs = Connector.query(sql, args);
+                    while (rs.next()) {
+                    Users us = new Users();
+                    us.setMaNV(rs.getString("manv"));
+                    us.setMatkhau(rs.getNString("matkhau"));
+                    us.setTenNV(rs.getNString("tennv"));
+                    list.add(us);
+             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+         return list;
     }
 }

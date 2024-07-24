@@ -4,6 +4,7 @@
  */
 package com.pms.ui;
 
+import com.pms.utils.XImage;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -33,6 +34,7 @@ public class TrangChu extends javax.swing.JFrame {
         new Timer(5, (ActionEvent e) -> {
             lblDongho.setText(format.format(new Date()));
         }).start();
+        this.setIconImage(XImage.getAppIcon());
     }
     
     public void get_Data_From_DifFrame(Boolean tp, String manv, String tennv, String urlanh){
@@ -487,7 +489,10 @@ public class TrangChu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNhanVienActionPerformed
 
     private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
-        
+        dispose();
+        ThongKeThang thongKeJFrame = new ThongKeThang();
+        thongKeJFrame.get_Data_From_DifFrame(truongPhong, maNV, tenNV, urlAnh);
+        thongKeJFrame.setVisible(true);
     }//GEN-LAST:event_btnThongKeActionPerformed
 
     private void btnLichSuXuatNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLichSuXuatNhapActionPerformed
@@ -551,7 +556,10 @@ public class TrangChu extends javax.swing.JFrame {
     }//GEN-LAST:event_mniLichSuXuatNhapActionPerformed
 
     private void mniThongKeHangThangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniThongKeHangThangActionPerformed
-        // TODO add your handling code here:
+        dispose();
+        ThongKeThang thongKeJFrame = new ThongKeThang();
+        thongKeJFrame.get_Data_From_DifFrame(truongPhong, maNV, tenNV, urlAnh);
+        thongKeJFrame.setVisible(true);
     }//GEN-LAST:event_mniThongKeHangThangActionPerformed
 
     private void mniVeChungToiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniVeChungToiActionPerformed

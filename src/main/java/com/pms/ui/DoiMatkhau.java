@@ -6,6 +6,7 @@ package com.pms.ui;
 
 import com.pms.dao.UsersDAO;
 import com.pms.entity.Users;
+import com.pms.utils.XImage;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
@@ -29,6 +30,7 @@ public class DoiMatkhau extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.WHITE);
+        this.setIconImage(XImage.getAppIcon());
     }
     
     public void get_Data_From_DifFrame(Boolean tp, String manv, String tennv, String urlanh){

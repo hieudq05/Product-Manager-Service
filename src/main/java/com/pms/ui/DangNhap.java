@@ -2,6 +2,7 @@ package com.pms.ui;
 
 import com.pms.dao.UsersDAO;
 import com.pms.entity.Users;
+import com.pms.utils.XImage;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 
@@ -23,6 +24,7 @@ public class DangNhap extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.WHITE);
+        this.setIconImage(XImage.getAppIcon());
     }
     
     public Boolean checkNaN(){

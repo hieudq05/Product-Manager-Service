@@ -4,6 +4,7 @@
  */
 package com.pms.ui;
 
+import com.pms.utils.XImage;
 import java.awt.Color;
 
 /**
@@ -20,6 +21,7 @@ public class AboutUs extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.white);
+        this.setIconImage(XImage.getAppIcon());
     }
 
     /**

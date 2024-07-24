@@ -29,8 +29,8 @@ public class History_Import_Export_DAO extends pmsDAO<History_IP_EP, Integer> {
                 history_IP_EP.setThaoTac(rs.getString(3));
                 history_IP_EP.setMaHang(rs.getString(4));
                 history_IP_EP.setTenHang(rs.getString(5));
-                history_IP_EP.setDonGia(rs.getInt(6));
-                history_IP_EP.setSoLuong(rs.getInt(7));
+                history_IP_EP.setDonGia(rs.getInt(7));
+                history_IP_EP.setSoLuong(rs.getInt(6));
                 history_IP_EP.setNguoiThaoTac(rs.getString(8));
                 history_IP_EP.setSoLuongBanDau(rs.getInt(9));
                 history_IP_EP.setSoLuongConLai(rs.getInt(10));
@@ -66,8 +66,8 @@ public class History_Import_Export_DAO extends pmsDAO<History_IP_EP, Integer> {
                 history_IP_EP.setThaoTac(rs.getString(3));
                 history_IP_EP.setMaHang(rs.getString(4));
                 history_IP_EP.setTenHang(rs.getString(5));
-                history_IP_EP.setDonGia(rs.getInt(6));
-                history_IP_EP.setSoLuong(rs.getInt(7));
+                history_IP_EP.setDonGia(rs.getInt(7));
+                history_IP_EP.setSoLuong(rs.getInt(6));
                 history_IP_EP.setNguoiThaoTac(rs.getString(8));
                 history_IP_EP.setSoLuongBanDau(rs.getInt(9));
                 history_IP_EP.setSoLuongConLai(rs.getInt(10));

@@ -7,6 +7,7 @@ package com.pms.ui;
 import com.pms.dao.ProductsDAO;
 import com.pms.entity.Products;
 import com.pms.utils.MsgBox;
+import com.pms.utils.XImage;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -36,7 +37,9 @@ public class QuanLyDanhSachHang extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setLayoutTable();
         fillTable();
+        this.setIconImage(XImage.getAppIcon());
     }
+    
     void fillTable(){
         DefaultTableModel model = (DefaultTableModel) tblHangHoa.getModel();
         model.setRowCount(0);

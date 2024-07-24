@@ -1,3 +1,4 @@
+C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\dao\History_import_exportDAO.java
 C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\utils\Connector.java
 C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\ui\XuatHang.java
 C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\entity\Products_Import.java
@@ -11,16 +12,18 @@ C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\dao\Histor
 C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\dao\pmsDAO.java
 C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\entity\Products.java
 C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\ui\AboutUs.java
+C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\entity\History_import_export.java
 C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\ui\LichSuXuatNhap.java
 C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\ui\TrangChu.java
 C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\dao\Products_Export_DAO.java
-C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\ui\ThongKe.java
 C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\dao\Products_Import_DAO.java
 C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\ui\NhapHang.java
+C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\ui\ThongKeThang.java
 C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\utils\MsgBox.java
 C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\ui\KhoiDong.java
 C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\ui\QuanLyDanhSachHang.java
 C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\dao\ProductsDAO.java
 C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\utils\XImage.java
+C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\dao\ThongKeDAO.java
 C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\entity\Users.java
 C:\Users\MSI\Downloads\Products_Manager_Service\src\main\java\com\pms\dao\UsersDAO.java
